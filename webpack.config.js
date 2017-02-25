@@ -6,24 +6,43 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    rules: [
+    loaders: [
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
+        test: /.jsx?$/,
         loader: 'babel-loader',
-        options: {
-          presets: ['react', 'es2015'] 
-        } 
-      },  {
-    test: /\.css$/,
-    use: [
-      'style-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015', 'react']
+        }
+      },
+      { 
+        test: /\.css$/, 
+        loader: "style-loader!css-loader" 
+      },
+      { 
+        test: /\.png$/, 
+        loader: "url-loader?limit=100000" 
+      },
+      { 
+        test: /\.jpg$/, 
+        loader: "file-loader" 
+      },
       {
-        loader: 'css-loader',
-        options: {  }
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'url?limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'url?limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'file'
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'url?limit=10000&mimetype=image/svg+xml'
       }
     ]
-  }
-    ] 
   }
 };

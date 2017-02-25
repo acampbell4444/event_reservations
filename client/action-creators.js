@@ -1,13 +1,19 @@
 import axios from 'axios';
 
-import {SET_CALENDAR_SELECT} from './constants'
-import {FETCH_EVENTS} from './constants'
+import {FETCH_EVENT_TIMES, FETCH_EVENTS, SET_CURRENT_EVENT} from './constants'
 
-
-export const setCalendarSelect = function (date) {
+export const setCurrentEvent = function (event) {
   return {
-    type: SET_CALENDAR_SELECT,
-    selectedDate: date
+    type : SET_CURRENT_EVENT,
+    currentEvent: event
+  }
+}
+
+
+export const getEventTimes = function (times) {
+  return {
+    type: FETCH_EVENT_TIMES,
+    selectedEventTimes: times
   };
 };
 
@@ -20,14 +26,26 @@ export function getEvents (events) {
 }
 
 export const fetchEventsFromServer = function () {
+  return function (dispatch) {
+      axios.get('/api/event') 
+      .then(res => {
+        const getEventsAction = getEvents(res.data);
+        dispatch(getEventsAction);
+      });
+    };
+};
+
+export const fetchEventTimes = function (id) {
 	return function (dispatch) {
-	    axios.get('/api/event') 
+	    axios.get('/api/event/times'+'/'+id) 
 	    .then(res => {
-	      const getEventsAction = getEvents(res.data);
-	      dispatch(getEventsAction);
+	      const getEventTimesAction = getEventTimes(res.data);
+	      dispatch(getEventTimesAction);
 	    });
 	  };
 };
+
+
 
 
 

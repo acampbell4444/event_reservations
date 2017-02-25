@@ -2,32 +2,55 @@
 import React from 'react';
 import { Link } from 'react-router';
 import BigCalendar from 'react-big-calendar';
-let moment = require('moment-timezone');
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { push } from 'react-router-redux';
 import {hashHistory} from 'react-router'
-
+import moment from 'moment-timezone';
+import { Button, ButtonToolbar, Modal, Component } from 'react-bootstrap';
+import store from '../store'
 
 BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(moment)
 );
 
-export default function (props) {
-  let events = props.events.map(event=>{
-    var hours = new Date(event.start).getHours()
-    hours = (hours > 12 ? hours - 12 + ' pm' : hours === 12 ? hours + 'pm' : hours + 'am ') + ' Trip'
-    return {title : hours, start : new Date(event.start), end : new Date(event.end) }
-    })
-  return (
-   <div style={{'height':'800px'}}>
-     <BigCalendar
-        selectable
-        events={events}
-        onSelectEvent={event => {
-          hashHistory.push('/newReservation');
-          props.setCalendarSelection(event.start)
-        }}
-      />
-  </div>
-  );
-}
+
+export default class Calendar extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {}
+    this.getInitialState = this.getInitialState.bind(this)
+    this.showModal = this.showModal.bind(this)
+    this.hideModal = this.hideModal.bind(this)
+  }
+    getInitialState() {
+    return {show: false};
+  }
+
+  showModal() {
+    this.setState({show: true});
+  }
+
+  hideModal() {
+    this.setState({show: false});
+  }
+
+  
+  render () {
+    return ( 
+            <div>
+              <BigCalendar style={{'height':'500px'}}
+                selectable
+                events={this.props.events}
+                onSelectEvent={event => {
+                  this.props.setCurrentlySelectedEvent(event)
+                  this.props.getEventTimes(event.id)
+                  hashHistory.push('/showModal');
+                }}
+              />
+              {this.props.children}
+    
+        
+          </div>
+    );//end return
+  }//end render
+} // end class Calendar

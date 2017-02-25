@@ -1,17 +1,24 @@
-import {SET_CALENDAR_SELECT} from './constants'
-import {FETCH_EVENTS} from './constants'
+import {FETCH_EVENTS, FETCH_EVENT_TIMES, SET_CURRENT_EVENT} from './constants'
+
 import { combineReducers } from 'redux';
 
 const initialState = {
-  bigCalendarSelectedDate: {},
-  events: []
+  currentEvent : {},
+  selectedEventTimes : [],
+  events : []
 };
 
-
-
-function bigCalendarReducer(state = '', action) {
+function currentEventReducer(state = {}, action) {
 	switch (action.type) {
-		case SET_CALENDAR_SELECT: return action.selectedDate;
+		case SET_CURRENT_EVENT: return action.currentEvent;
+		default: 
+			return state;
+	}
+}
+
+function selectedEventTimesReducer(state = [], action) {
+	switch (action.type) {
+		case FETCH_EVENT_TIMES: return action.selectedEventTimes;
 		default: 
 			return state;
 	}
@@ -25,11 +32,10 @@ function eventReducer(state = [], action) {
 	}
 }
 
-
-
 export default combineReducers({
-  bigCalendarSelectedDate: bigCalendarReducer,
-  events: eventReducer
+  currentEvent : currentEventReducer,
+  selectedEventTimes : selectedEventTimesReducer,
+  events : eventReducer
 });
 
 

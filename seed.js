@@ -1,6 +1,5 @@
+const {Event, TimeSlot, db} = require('./server/db/index')
 
-const db = require('./server/db/_db')
-const Event = require('./server/db/models/event')
 
 Date.prototype.addHours= function(h){
     this.setHours(this.getHours()+h);
@@ -8,26 +7,37 @@ Date.prototype.addHours= function(h){
 }
 
 
+
 const dates = []
 var date = new Date(2017, 1, 23, 9, 0, 0)
 
 for(var x = 0; x <=365; x++) {
-  if(x>0){date = new Date(date.addHours(16))}
-  
-  for(var i = 0 ; i <= 7; i++) {
-    dates.push(date)
-    date = new Date(date.addHours(1))
-  }
+  dates.push(date)
+  date =new Date(date.addHours(24))
 }
+
+let timeSlots = []
+let times = ['9am', '10am', '11am','12pm','1pm']
+times.forEach(time=>timeSlots.push({name: time, availableSpots: 15}))
+
 
  db.sync({force:true})
  .then(()=>{
  	dates.forEach(date=>{
  		Event.create( {
-    		'title': '1  Hour Event',
-    		'start': date,
-    		'end': new Date(date).addHours(1)
+    		'title': 'Charter-Boat #1',
+    		'dayNum': date.getDate(),
+    		'monthNum': date.getMonth(),
+        'yearNum' : date.getFullYear()
   		})
+      .then(event=>{
+        timeSlots.forEach(timeSlot=>{
+          TimeSlot.create(timeSlot)
+          .then(timeSlot=>{
+            timeSlot.setEventTime(event)
+          })
+        })
+      })
   	})
   })
   .catch(function (err) {
@@ -35,11 +45,6 @@ for(var x = 0; x <=365; x++) {
   })
 
 
-
- // 	})
- // 	Event.create( {
- //    	'title': '1  Hour Event',
- //    	'start': new Date(2017, 1, 25, 10, 0, 0),
- //    	'end': new Date(2017, 1, 25, 11, 0, 0)
- //  	})
- // })
+dates.map(d=>d.getMonth())  //month num 0-11
+dates.map(d=>d.getDate())   //day num
+dates.map(d=>d.getFullYear())   //year num

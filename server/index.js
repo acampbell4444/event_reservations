@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).send(err.message || 'Internal server error');
 });
 
-const db = require('./db');
+const {db} = require('./db');
 db.sync()
 .then(() =>{
   app.listen(3000, () => {

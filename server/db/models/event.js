@@ -9,11 +9,23 @@ const Event = db.define('event', {
       notEmpty: true 
     } 
   },
-  start: {
-    type: Sequelize.DATE
+  monthNum: {
+    type: Sequelize.INTEGER
   },
-  end: {
-    type: Sequelize.DATE
+  dayNum: {
+    type: Sequelize.INTEGER
+  },
+  yearNum: {
+    type: Sequelize.INTEGER
+  }
+},{
+  getterMethods: {
+    start : function () {
+      return new Date(this.yearNum, this.monthNum, this.dayNum)
+    },
+    end : function () {
+      return new Date(this.yearNum, this.monthNum, this.dayNum)
+    }
   }
 });
 
