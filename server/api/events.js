@@ -10,7 +10,8 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/times/:eventId', (req, res, next) => {
-  TimeSlot.findAll({where: {eventTimeId: req.params.eventId}, include:{all:true}})
+  TimeSlot.findAll({where: {eventTimeId: req.params.eventId}, order: [
+    ['startTime', 'ASC']], include:{all:true}})
   .then(times => {
   	res.send(times)})
   .catch(next);

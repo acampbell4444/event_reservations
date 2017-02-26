@@ -17,8 +17,8 @@ for(var x = 0; x <=365; x++) {
 }
 
 let timeSlots = []
-let times = ['9am', '10am', '11am','12pm','1pm']
-times.forEach(time=>timeSlots.push({name: time, availableSpots: 15}))
+let times = [900, 1000, 1100,1200,1300, 1400]
+times.forEach(time=>timeSlots.push({startTime: time, availableSpots: 15}))
 
 
  db.sync({force:true})

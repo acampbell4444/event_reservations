@@ -9,14 +9,12 @@ export const setCurrentEvent = function (event) {
   }
 }
 
-
 export const getEventTimes = function (times) {
   return {
     type: FETCH_EVENT_TIMES,
     selectedEventTimes: times
   };
 };
-
 
 export function getEvents (events) {
   return {

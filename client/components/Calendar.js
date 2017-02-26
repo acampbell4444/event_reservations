@@ -13,28 +13,11 @@ BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(moment)
 );
 
-
 export default class Calendar extends React.Component {
   constructor (props) {
-    super(props)
-    this.state = {}
-    this.getInitialState = this.getInitialState.bind(this)
-    this.showModal = this.showModal.bind(this)
-    this.hideModal = this.hideModal.bind(this)
+    super(props) 
   }
-    getInitialState() {
-    return {show: false};
-  }
-
-  showModal() {
-    this.setState({show: true});
-  }
-
-  hideModal() {
-    this.setState({show: false});
-  }
-
-  
+    
   render () {
     return ( 
             <div>
@@ -48,9 +31,7 @@ export default class Calendar extends React.Component {
                 }}
               />
               {this.props.children}
-    
-        
-          </div>
-    );//end return
-  }//end render
-} // end class Calendar
+            </div>
+    );
+  }
+} 

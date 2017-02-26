@@ -41999,31 +41999,10 @@ var Calendar = function (_React$Component) {
   function Calendar(props) {
     _classCallCheck(this, Calendar);
 
-    var _this = _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
-
-    _this.state = {};
-    _this.getInitialState = _this.getInitialState.bind(_this);
-    _this.showModal = _this.showModal.bind(_this);
-    _this.hideModal = _this.hideModal.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
   }
 
   _createClass(Calendar, [{
-    key: 'getInitialState',
-    value: function getInitialState() {
-      return { show: false };
-    }
-  }, {
-    key: 'showModal',
-    value: function showModal() {
-      this.setState({ show: true });
-    }
-  }, {
-    key: 'hideModal',
-    value: function hideModal() {
-      this.setState({ show: false });
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -42041,14 +42020,12 @@ var Calendar = function (_React$Component) {
           }
         }),
         this.props.children
-      ); //end return
-    } //end render
-
+      );
+    }
   }]);
 
   return Calendar;
-}(_react2.default.Component); // end class Calendar
-
+}(_react2.default.Component);
 
 exports.default = Calendar;
 
@@ -42107,6 +42084,9 @@ var _class = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      // console.log('props',this.props)
+      // console.log('state',this.state)
+
 
       return _react2.default.createElement(
         'div',
@@ -42125,21 +42105,24 @@ var _class = function (_React$Component) {
             _react2.default.createElement(
               _reactBootstrap.Modal.Title,
               { id: 'contained-modal-title-sm' },
-              _store2.default.getState().currentEvent.dayNum
+              this.props.currentEvent.dayNum
             )
           ),
           _react2.default.createElement(
             _reactBootstrap.Modal.Body,
             null,
             _react2.default.createElement(
-              'h4',
+              'ul',
               null,
-              _store2.default.getState().selectedEventTimes.length && _store2.default.getState().selectedEventTimes[0].name
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              'ident vel magnam quod. Possimus eligendi non corrupti tenetur culpa accusantium quod quis. Voluptatum quaerat animi dolore maiores molestias voluptate? Necessitatibus illo omnis laborum hic enim minima! Similique. Dolor voluptatum reprehenderit nihil adipisci aperiam voluptatem soluta magnam accusamus iste incidunt tempore consequatur illo illo odit. Asperiores nesciunt iusto nemo animi ratione. Sunt odit similique doloribus temporibus reiciendis! Ullam. Dolor dolores veniam animi sequi dolores molestias voluptatem iure velit. Elit dolore quaerat incidunt enim aut distinctio. Ratione molestiae laboriosam similique laboriosam eum et nemo expedita. Consequuntur perspiciatis cumque dolorem.'
+              this.props.selectedEventTimes.map(function (slot) {
+                return _react2.default.createElement(
+                  'li',
+                  { key: slot.id },
+                  slot.startTimeString,
+                  ' ',
+                  slot.availableSpots
+                );
+              })
             )
           ),
           _react2.default.createElement(
@@ -42152,14 +42135,12 @@ var _class = function (_React$Component) {
             )
           )
         )
-      ); //end return
-    } //end render
-
+      );
+    }
   }]);
 
   return _class;
-}(_react2.default.Component); // end class Calendar
-
+}(_react2.default.Component);
 
 exports.default = _class;
 

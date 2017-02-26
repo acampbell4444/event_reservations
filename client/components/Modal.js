@@ -17,6 +17,9 @@ export default class extends React.Component {
   }
   
   render () {
+    // console.log('props',this.props)
+    // console.log('state',this.state)
+
 
     return ( 
             <div>
@@ -27,19 +30,22 @@ export default class extends React.Component {
                 aria-labelledby="contained-modal-title-sm"
               >
                 <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-sm">{store.getState().currentEvent.dayNum}</Modal.Title>
+                <Modal.Title id="contained-modal-title-sm">{this.props.currentEvent.dayNum}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <h4>{store.getState().selectedEventTimes.length&&store.getState().selectedEventTimes[0].name}</h4>
-                  <p>ident vel magnam quod. Possimus eligendi non corrupti tenetur culpa accusantium quod quis. Voluptatum quaerat animi dolore maiores molestias voluptate? Necessitatibus illo omnis laborum hic enim minima! Similique. Dolor voluptatum reprehenderit nihil adipisci aperiam voluptatem soluta
-                   magnam accusamus iste incidunt tempore consequatur illo illo odit. Asperiores nesciunt iusto nemo animi ratione. Sunt odit similique doloribus temporibus reiciendis! Ullam. Dolor dolores veniam animi sequi dolores molestias voluptatem iure velit. Elit dolore quaerat incidunt enim aut distinctio. Ratione molestiae laboriosam
-                   similique laboriosam eum et nemo expedita. Consequuntur perspiciatis cumque dolorem.</p>
+                  <ul>
+                  {
+                    this.props.selectedEventTimes.map(slot=>(
+                      <li key={slot.id}>{slot.startTimeString} {slot.availableSpots}</li>
+                    ))
+                  }
+                  </ul>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button onClick={this.hideModal}>Close</Button>
                 </Modal.Footer>
               </Modal>
             </div>
-    );//end return
-  }//end render
-} // end class Calendar
+    );
+  }
+}
