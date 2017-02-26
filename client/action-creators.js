@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-import {FETCH_EVENT_TIMES, FETCH_EVENTS, SET_CURRENT_EVENT} from './constants'
+import {FETCH_EVENT_TIMES, FETCH_EVENTS, SET_CURRENT_EVENT, SET_CURRENT_TIMESLOT} from './constants'
+
+export const setCurrentTimeSlot = function (slot) {
+  return {
+    type : SET_CURRENT_TIMESLOT,
+    currentTimeSlot: slot
+  }
+}
 
 export const setCurrentEvent = function (event) {
   return {

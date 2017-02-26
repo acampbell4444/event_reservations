@@ -1,12 +1,21 @@
-import {FETCH_EVENTS, FETCH_EVENT_TIMES, SET_CURRENT_EVENT} from './constants'
+import {FETCH_EVENTS, FETCH_EVENT_TIMES, SET_CURRENT_EVENT, SET_CURRENT_TIMESLOT} from './constants'
 
 import { combineReducers } from 'redux';
 
 const initialState = {
+  currentTimeSlot: '',
   currentEvent : {},
   selectedEventTimes : [],
   events : []
 };
+
+function currentTimeSlotReducer(state = '', action) {
+	switch (action.type) {
+		case SET_CURRENT_TIMESLOT: return action.currentTimeSlot;
+		default: 
+			return state;
+	}
+}
 
 function currentEventReducer(state = {}, action) {
 	switch (action.type) {
@@ -33,6 +42,7 @@ function eventReducer(state = [], action) {
 }
 
 export default combineReducers({
+  currentTimeSlot : currentTimeSlotReducer,
   currentEvent : currentEventReducer,
   selectedEventTimes : selectedEventTimesReducer,
   events : eventReducer

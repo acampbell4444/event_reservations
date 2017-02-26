@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import ModalForm from '../components/Modal';
 import store from '../store';
 import { connect } from 'react-redux';
+import { setCurrentTimeSlot} from '../action-creators';
 
-
+function mapDispatchToProps (dispatch) {
+  return {
+    setSelectedTimeSlot: function (slot) {
+      dispatch(setCurrentTimeSlot(slot))
+    }
+  };
+};
 
 function mapStateToProps (state) {
   return {
@@ -13,7 +20,7 @@ function mapStateToProps (state) {
 }
 
 const ModalContainer = connect(
-  mapStateToProps
+  mapStateToProps, mapDispatchToProps
 )(ModalForm);
 
 export default ModalContainer;

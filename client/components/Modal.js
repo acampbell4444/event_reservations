@@ -4,23 +4,27 @@ import {hashHistory} from 'react-router'
 import { Button, ButtonToolbar, Modal, Component } from 'react-bootstrap';
 
 
+
 export default class extends React.Component {
   constructor (props) {
     super(props)
     this.state = {show:true}
     this.hideModal = this.hideModal.bind(this)
+    this.setSlot = this.setSlot.bind(this)
   }
 
   hideModal() {
     this.setState({show: false});
     hashHistory.push('/calendar')
   }
+
+  setSlot(slot) {
+    this.props.setSelectedTimeSlot(slot)
+  }
+
   
   render () {
-    // console.log('props',this.props)
-    // console.log('state',this.state)
-
-
+    let event = this.props.currentEvent
     return ( 
             <div>
               <Modal
@@ -30,13 +34,18 @@ export default class extends React.Component {
                 aria-labelledby="contained-modal-title-sm"
               >
                 <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-sm">{this.props.currentEvent.dayNum}</Modal.Title>
+                <Modal.Title id="contained-modal-title-sm">{(event.monthNum + 1)+"-" + event.dayNum + '-' + event.yearNum}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <ul>
                   {
                     this.props.selectedEventTimes.map(slot=>(
-                      <li key={slot.id}>{slot.startTimeString} {slot.availableSpots}</li>
+                      <li key={slot.id}>{slot.startTimeString} 
+                        <button onClick={e=>this.setSlot(slot.startTimeString)}>
+                          {slot.availableSpots}
+                        </button>
+
+                       </li>
                     ))
                   }
                   </ul>
@@ -49,3 +58,17 @@ export default class extends React.Component {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
